@@ -1,0 +1,52 @@
+from PyPDF2 import PdfMerger
+from PIL import Image
+import os
+
+# ---------- PDF Merger ----------
+def merge_pdfs(pdf_list, output_file):
+    merger = PdfMerger()
+
+    for pdf in pdf_list:
+        merger.append(pdf)
+
+    merger.write(output_file)
+    merger.close()
+    print(f"PDFs merged successfully into '{output_file}'")
+
+# ---------- Image to PDF Converter ----------
+def image_to_pdf(image_file, output_pdf):
+    image = Image.open(image_file)
+
+    if image.mode != "RGB":
+        image = image.convert("RGB")
+
+    image.save(output_pdf)
+    print(f"Image converted successfully into '{output_pdf}'")
+
+# ---------- Main Menu ----------
+while True:
+    print("\nPDF Utility")
+    print("1. Merge PDFs")
+    print("2. Convert Image to PDF")
+    print("3. Exit")
+
+    choice = input("Enter your choice: ")
+
+    if choice == "1":
+        files = input("Enter PDF file names separated by commas: ").split(",")
+        files = [f.strip() for f in files]
+        output = input("Enter output PDF name: ")
+        merge_pdfs(files, output)
+
+    elif choice == "2":
+        image = input("Enter image file name: ")
+        output = input("Enter output PDF name: ")
+        image_to_pdf(image, output)
+
+    elif choice == "3":
+        print("Exiting...")
+        break
+
+    else:
+        print("Invalid choice!")
+Install required libraries:
